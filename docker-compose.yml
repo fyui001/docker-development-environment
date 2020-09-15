@@ -1,0 +1,23 @@
+version: '3.7'
+services:
+  p-portainer:
+    image: portainer/portainer
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./portainer:/data
+  traefik:
+    image: traefik
+    ports:
+      - "80:80"
+    restart: always
+    labels:
+      - "traefik.http.routers.api.rule=Host(`t.localhost`)"
+      - "traefik.http.routers.api.service=api@internal"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik/traefik.toml:/etc/traefik/traefik.toml
+networks:
+  docker_default:
+    external:
+      name: docker_default
