@@ -26,5 +26,4 @@ services:
       - ./traefik/traefik.toml:/etc/traefik/traefik.toml
 networks:
   docker_default:
-    external:
-      name: docker_default
+    name: docker_default
